@@ -1,10 +1,16 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",  // Tells Tailwind to scan all your component files
-  ],
+import lineClamp from '@tailwindcss/line-clamp';
+import scrollbarHide from 'tailwind-scrollbar-hide';
+
+const config = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        roboto: ["Roboto", "Arial", "sans-serif"],
+      },
+    },
   },
-  plugins: [],
-}
+  plugins: [lineClamp, scrollbarHide],
+};
+
+export default config;

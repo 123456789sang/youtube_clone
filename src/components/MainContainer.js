@@ -4,10 +4,12 @@ import VedioContainer from './VedioContainer';
 
 const MainContainer = () => {
   return (
-    <div className='col-span-11'>
-      <ButtonList/>
-      <VedioContainer/>
-    </div>
+   <div className='h-screen '>
+        <div className=' mt-12  '>
+            <ButtonList/>
+            <VedioContainer/>
+        </div>
+   </div>
   );
 }
 ;

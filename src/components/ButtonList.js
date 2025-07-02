@@ -1,19 +1,21 @@
 import React from 'react'
 import Button from './Button'
+
 const ButtonList = () => {
   return (
-    <div className='flex'>
-        <Button name="All"/>
-        <Button name="Music"/> 
-        <Button name="Bhojpuri_cinema"/> 
-        <Button name="Albums"/> 
-        <Button name="live"/>
-        <Button name="News"/>
-
-        <Button name="Movie"/>
-        <Button name="Romantic_Comedy"/>
-        <Button name="Mixes"/>
-        <Button name="Watched"/>
+    <div className="sticky top-14 z-40 bg-white px-4 py-3 shadow-sm">
+      <div className="flex gap-2  no-scrollbar whitespace-nowrap ">
+        <Button name="All" />
+        <Button name="Music" />
+        <Button name="Bhojpuri_cinema" />
+        <Button name="Albums" />
+        <Button name="live" />
+        <Button name="News" />
+        <Button name="Movie" />
+        <Button name="Romantic_Comedy" />
+        <Button name="Mixes" />
+        <Button name="Watched" />
+      </div>
     </div>
   )
 }
