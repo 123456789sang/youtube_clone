@@ -7,12 +7,13 @@ const Layout = () => {
   return (
     <>
       <Head />
-      <div className="flex flex-col md:flex-row h-screen overflow-hidden  ">
-           <SideBar />
-        <div className="flex-1 h-screen overflow-y-auto scrollbar-hide">
-            <Outlet />
+       <div className="flex h-[calc(100-4rem)] mt-16">
+            <SideBar />
+            <div className="flex-1 max-h-screen overflow-auto scrollbar-hide ">
+                <Outlet />
+            </div>
         </div>
-    </div>
+
     </>
   );
 };

@@ -29,7 +29,7 @@ const appRouter =createBrowserRouter([{
             element:<Shorts/>
         },
         {
-             path: 'results',
+            path: 'results',
             element: <SearchResultsPage /> 
         },
         

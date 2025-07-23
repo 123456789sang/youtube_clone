@@ -1,66 +1,53 @@
-import React, { useState } from 'react';
+// import { ThumbsUp, ThumbsDown } from "lucide-react";
 
-const Comment = ({ data, onReply }) => {
-  const { name, text } = data;
-  const [showReplyBox, setShowReplyBox] = useState(false);
-  const [replyText, setReplyText] = useState('');
+import { FaSortDown, FaSortUp } from "react-icons/fa";
 
-  const handleReply = () => {
-    if (replyText.trim()) {
-      onReply(replyText);
-      setReplyText('');
-      setShowReplyBox(false);
-    }
-  };
+const Comment = ({ comment, onReact }) => {
+  const {
+    id, author, profileImg, text,
+    likeCount, publishedAt, liked, disliked,dislikeCount,
+  } = comment;
 
   return (
-    <div className="flex flex-col mb-4">
-      <div className="flex items-start gap-3">
+    <div className="flex gap-3 border border-gray-200 rounded-2xl p-4">
         <img
-          className="w-10 h-10 rounded-full"
-          src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"
-          alt="user"
+            src={profileImg || `https://api.dicebear.com/7.x/thumbs/svg?seed=${author}`}
+            onError={(e) =>
+                (e.target.src = `https://api.dicebear.com/7.x/thumbs/svg?seed=${author}`)
+            }
+            alt="user"
+            className="w-10 h-10 rounded-full"
         />
-        <div>
-          <p className="text-sm font-semibold">{name}</p>
-          <p className="text-sm">{text}</p>
-          <div className="flex gap-4 text-sm text-gray-600 mt-1">
-            <button>👍</button>
-            <button>👎</button>
-            <button onClick={() => setShowReplyBox(!showReplyBox)} className="hover:underline">
-              Reply
-            </button>
-          </div>
 
-          {showReplyBox && (
-            <div className="mt-2">
-              <textarea
-                className="w-full border p-2 rounded text-sm"
-                rows={2}
-                placeholder="Write a reply..."
-                value={replyText}
-                onChange={(e) => setReplyText(e.target.value)}
-              />
-              <div className="flex gap-2 mt-1">
+
+       <div>
+            <p className="font-semibold">{author}</p>
+            <p className="text-sm text-gray-500">
+            {new Date(publishedAt).toLocaleString()}
+            </p>
+            <p className="my-1">{text}</p>
+            <div className="flex items-center gap-4 mt-1">
                 <button
-                  className="bg-blue-600 text-white px-3 py-1 rounded text-sm"
-                  onClick={handleReply}
+                    onClick={() => onReact(id, "like")}
+                    className={`flex items-center gap-1 ${
+                    liked ? "text-blue-600 font-semibold" : ""
+                    }`}
                 >
-                  Reply
+                    <FaSortUp size={16} />
+                    {likeCount}
                 </button>
                 <button
-                  className="text-sm text-gray-600"
-                  onClick={() => setShowReplyBox(false)}
+                    onClick={() => onReact(id, "dislike")}
+                    className={`flex items-center gap-1 ${
+                    disliked ? "text-red-600 font-semibold" : ""
+                    }`}
                 >
-                  Cancel
+                    <FaSortDown size={16} />{dislikeCount}
                 </button>
-              </div>
             </div>
-          )}
         </div>
-      </div>
     </div>
-  );
+   );
 };
 
 export default Comment;

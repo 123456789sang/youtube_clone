@@ -2,7 +2,7 @@ import WatchShorts from './WatchShorts';
 
 const Shorts = () => {
   return (
-    <div className="h-screen mt-20  ">
+    <div className="py-4">
       <WatchShorts />
     </div>
   );

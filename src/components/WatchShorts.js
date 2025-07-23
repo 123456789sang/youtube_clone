@@ -1,40 +1,47 @@
-
 import React, { useEffect, useRef } from 'react';
 import shortData from '../utils/shortData';
 
 const WatchShorts = () => {
   const videoRefs = useRef([]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target;
-          if (entry.isIntersecting) {
-            video.play();
-          } else {
-            video.pause();
-          }
-        });
-      },
-      {
-        threshold: 0.75, // 80% of video should be visible to start playing
-      }
-    );
-
-    videoRefs.current.forEach((video) => {
-      if (video) observer.observe(video);
-    });
-
-    return () => {
-      videoRefs.current.forEach((video) => {
-        if (video) observer.unobserve(video);
+useEffect(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          video.play().catch((e) => {
+            if (e.name !== 'AbortError') {
+              console.warn('Play error:', e.message);
+            }
+          });
+        } else {
+          video.pause();
+        }
       });
-    };
-  }, []);
+    },
+    {
+      threshold: 0.75,
+    }
+  );
+
+  // Observe current videos
+  videoRefs.current.forEach((video) => {
+    if (video) observer.observe(video);
+  });
+
+  // ✅ Fix the warning by copying ref values into a local variable
+  const observedVideos = [...videoRefs.current];
+
+  return () => {
+    observedVideos.forEach((video) => {
+      if (video) observer.unobserve(video);
+    });
+  };
+}, []);
 
   return (
-    <div className="h-[calc(100vh-5.5rem)] w-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth no-scrollbar">
+    <div className="min-h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide">
       {shortData.map((short, index) => (
         <div
           key={short.id}
@@ -54,4 +61,4 @@ const WatchShorts = () => {
   );
 };
 
-export default WatchShorts;
+export default WatchShorts;   

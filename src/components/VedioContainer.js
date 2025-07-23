@@ -19,9 +19,9 @@ const getVideos = async () => {
   setVideos(data.items);
 
   const channelIds = [...new Set(data.items.map(v => v.snippet.channelId))].join(',');
-  const channelRes = await fetch(YOUTUBE_CHANNEL_API(channelIds));
+  const channelRes = await fetch(`${YOUTUBE_CHANNEL_API}&id=${channelIds}`);
   const channelData = await channelRes.json();
-
+  console.log(channelData)
   const logos = Object.fromEntries(
     channelData.items.map(c => [c.id, c.snippet.thumbnails.default.url])
   );
@@ -30,7 +30,7 @@ const getVideos = async () => {
 
   return (
 
-  <div className="w-full px-2 sm:px-2 md:px-4 lg:px-6 py-6">
+  <div className="w-full border-6 border-red-950 px-2 sm:px-2 md:px-4 lg:px-6 py-6">
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
     {videos?.map((video) => (
       <Link key={video.id} to={"watch?v=" + video.id} className="block">

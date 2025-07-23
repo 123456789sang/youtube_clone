@@ -1,5 +1,5 @@
 
-import { formatDuration, formatTimeAgo, formatViews } from "../utils/constants";
+import { formatDuration, formatTimeAgo, formatViews } from "../utils/helper";
 
 const VedioCard = ({ info, channelLogo }) => {
   const { snippet, statistics, contentDetails } = info;
@@ -28,11 +28,11 @@ const VedioCard = ({ info, channelLogo }) => {
       </div>
 
       {/* Video Info */}
-      <div className="flex p-3 gap-3">
+      <div className="flex  p-3 gap-3">
         <img
           src={channelLogo || "/fallback.png"}
           alt="channel"
-          className="w-10 h-10 rounded-full object-cover"
+          className="w-8 h-8 sm:w-10 sm:h-10  rounded-full object-cover"
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = "/fallback.png";

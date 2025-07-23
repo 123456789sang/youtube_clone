@@ -4,9 +4,10 @@ import {
   YOUTUBE_SEARCH_RESULTS_API,
   YOUTUBE_CHANNEL_API,
   YOUTUBE_VIDEO_DETAILS_API,
-  formatViews,
-  formatDuration,
+  
 } from '../utils/constants';
+
+import {formatViews,formatDuration} from "../utils/helper"
 import SearchCard from '../components/SearchCard';
 
 const SearchResultsPage = () => {
@@ -42,7 +43,7 @@ const SearchResultsPage = () => {
 
       // Fetch video stats (view count & duration)
       if (videoIds.length > 0) {
-        const videoRes = await fetch(YOUTUBE_VIDEO_DETAILS_API(videoIds));
+        const videoRes = await fetch(`${YOUTUBE_VIDEO_DETAILS_API}&id=${videoIds}`);
         const videoData = await videoRes.json();
 
         const viewsMap = {};
@@ -57,7 +58,7 @@ const SearchResultsPage = () => {
 
       // Fetch channel thumbnails
       if (channelIds.length > 0) {
-        const channelRes = await fetch(YOUTUBE_CHANNEL_API(channelIds));
+        const channelRes = await fetch(`${YOUTUBE_CHANNEL_API}&id=${channelIds}`);
         const channelData = await channelRes.json();
 
         const thumbnailsMap = {};
@@ -72,8 +73,8 @@ const SearchResultsPage = () => {
   };
 
   return (
-    <div className="mt-20 px-4 sm:px-6 lg:px-12">
-      <h2 className="ml-24 text-xl sm:text-2xl font-semibold mb-6">
+    <div className="mt-5 sm:mt-8 px-4 sm:px-6 lg:px-12">
+      <h2 className="ml-16 text-xl sm:text-2xl font-semibold mb-6">
         Search Results for <span className="text-blue-600">"{query}"</span>
       </h2>
 

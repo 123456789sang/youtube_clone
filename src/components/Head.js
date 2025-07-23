@@ -8,12 +8,16 @@ import { useSelector } from 'react-redux';
 import { cacheResults } from '../utils/searchSlice';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { IoMdNotificationsOutline } from 'react-icons/io';
+
+import { HiOutlineSpeakerWave } from 'react-icons/hi2';
 const Head = () => {
     const[searchQuery,setSearchQuery]=useState("");
     const [suggestion ,setSuggestions]=useState([]);
     const[showSuggestions,setShowSuggestions]=useState(false);
     const searchCache = useSelector((store)=>store.search)
-      const navigate = useNavigate();
+    const navigate = useNavigate();
+    
     useEffect(()=>{
        // make an api call after every key press 
        // but the diff bwt api call is <200ms
@@ -58,57 +62,79 @@ const Head = () => {
     }
 
    return (
-    <div className='fixed top-0 left-0 right-0 z-50 bg-white grid h-16 grid-flow-col py-3 px-3    shadow-sm'>
+    <div className='fixed top-0 left-0 right-0 z-50 bg-white grid h-16 grid-flow-col py-3 px-2   shadow-sm'>
 
-       <div className='flex justify-between gap-6'>
-         <div className='flex w-2/12 mt-2 items-center '>
+       <div className='flex justify-between gap-6 px-1'>
+            <div className='flex w-2/12 mt-2 items-center '>
 
-            <img  onClick={()=>togglemenuhandler()}
-            className='h-8 cursor-pointer'
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0evWy6vmua96UkF8RqHQv-SoBcuu3V9fwZw&s" alt="menu"/>
+                <img  onClick={()=>togglemenuhandler()}
+                className='h-8 cursor-pointer'
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0evWy6vmua96UkF8RqHQv-SoBcuu3V9fwZw&s" alt="menu"/>
 
-            <Link  to="/"><img className='h-8 mx-2'
-               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nmSBXmGA-7Voowpk8oAcwLgXEpsIB_h3Jw&s" alt="Youtube-logo"/>
-           </Link>
-        </div>
-
-        <div className="w-9/12 px-5 relative">
-            <div className='flex  justify-center items-center '> 
-                <input
-                    className='w-[50%] border border-gray-300 pl-4 p-2 rounded-l-full'
-                    type="text"
-                    placeholder="Search ...."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onFocus={() => setShowSuggestions(true)}
-                    onBlur={() => setShowSuggestions(false)}
-                    onKeyDown={(e) => {
-                    if (e.key === 'Enter' && searchQuery.trim() !== '') {
-                        setShowSuggestions(false);
-                    navigate(`/results?q=${searchQuery}`);
-                    }
-                }}
-               />
-                <button className=' border border-gray-300 px-7 py-2 rounded-r-full bg-gray-100 hover:bg-gray-200 transition-all duration-200'
-                    onClick={() => navigate(`/results?q=${searchQuery}`)} >
-                    <FaSearch size={24} className='text-black opacity-40'  />
-                </button>
+                <Link  to="/"><img className='h-8 mx-2 '
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nmSBXmGA-7Voowpk8oAcwLgXEpsIB_h3Jw&s" alt="Youtube-logo"/>
+            </Link>
             </div>
-            {showSuggestions&&(
-                <div className= 'absolute top-11  bg-white py-2 px-2  w-[33rem] shadow-lg rounded-lg border border-gray-100 '>
-                    <ul className=''>
-                       {suggestion.map((s)=>(<li key={s} className='flex items-center gap-4 py-2 px-3 shadow-sm hover:bg-gray-100'
-                        onMouseDown={() => navigate(`/results?q=${s}`)} >
-                        <FaSearch size={20} className='text-gray-300'/>  {s}</li>))}  
-                    </ul>
+
+            <div className="w-9/12 px-5 relative ">
+                <div className='flex  justify-center items-center '> 
+                    <input
+                        className='w-[50%] border border-gray-300 pl-4 p-2 rounded-l-full'
+                        type="text"
+                        placeholder="Search ...."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onFocus={() => setShowSuggestions(true)}
+                        onBlur={() => setShowSuggestions(false)}
+                        onKeyDown={(e) => {
+                        if (e.key === 'Enter' && searchQuery.trim() !== '') {
+                            setShowSuggestions(false);
+                        navigate(`/results?q=${searchQuery}`);
+                        }
+                    }}
+                />
+                    <button className=' border border-gray-300 px-7 py-2 rounded-r-full bg-gray-100 hover:bg-gray-200 transition-all duration-200'
+                        onClick={() => navigate(`/results?q=${searchQuery}`)} >
+                        <FaSearch size={24} className='text-black opacity-40'  />
+                    </button>
+                    <div className='flex items-center mx-4'>
+                        {/* Speaker Icon */}
+                        <button className="bg-gray-100  hover:bg-gray-200 rounded-full">
+                            <HiOutlineSpeakerWave size={22} />
+                        </button>
+                    </div>
                 </div>
-            )}
-        </div>
+                {showSuggestions&&searchQuery&&(
+                    <div className= 'absolute top-11  bg-white py-2 px-2  w-[33rem] shadow-lg rounded-lg border border-gray-100  '>
+                        <ul className=''>
+                        {suggestion.map((s)=>(<li key={s} className='flex items-center gap-4 py-2 px-3 shadow-sm hover:bg-gray-100'
+                            onMouseDown={() => navigate(`/results?q=${s}`)} >
+                            <FaSearch size={20} className='text-gray-300'/>  {s}</li>))}  
+                        </ul>
+                    </div>
+                )}
+               
+            </div>
+
         
-        <div className='flex items-center  w-1/12'> 
-            <img className='h-8'
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtRs_rWILOMx5-v3aXwJu7LWUhnPceiKvvDg&s" alt="user-icon"/>
-        </div>
+            <div className="flex items-center  mx-2 sm:mx-3 md:mx-5 xl:mx-6 ">
+                {/* create */}
+                {/* Notification Bell */}
+                <button className="  relative mr-5  hover:bg-gray-200 rounded-full">
+                    <IoMdNotificationsOutline size={22} />
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-1 rounded-full">
+                    3
+                    </span>
+                </button>
+
+                {/* User Avatar */}
+                <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtRs_rWILOMx5-v3aXwJu7LWUhnPceiKvvDg&s"
+                    alt="user-icon"
+                    className="h-5 w-5 rounded-full object-cover sm:h-6 sm:w-6 md:h-8 md:w-8 "
+                />
+            </div>
+
        </div>
     </div>
   )

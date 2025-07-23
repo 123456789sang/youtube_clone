@@ -1,163 +1,95 @@
-
-import React, { useEffect, useState } from 'react';
-import { FaFilm, FaFire, FaGamepad, FaHome, FaNewspaper, FaPodcast, FaThumbsUp, FaVideo } from 'react-icons/fa';
+import React from 'react';
+import {
+  FaFilm, FaFire, FaGamepad, FaHome, FaNewspaper,
+  FaPodcast, FaThumbsUp, FaVideo
+} from 'react-icons/fa';
 import { MdLiveTv, MdSchool, MdSportsEsports } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { closeMenu} from '../utils/appSlice';
+import { closeMenu } from '../utils/appSlice';
+import { GiHamburgerMenu } from 'react-icons/gi';
 
 const SideBar = () => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const isMenuOpen = useSelector((state) => state.app.isMenuOpen);
-useEffect(() => {
-  const handleResize = () => {
-    if (window.innerWidth < 800 && isMenuOpen) {
-      dispatch(closeMenu());
-    }
-  };
-
-  window.addEventListener('resize', handleResize);
-
-  // Initial check
-  handleResize();
-
-  return () => {
-    window.removeEventListener('resize', handleResize);
-  };
-}, [dispatch, isMenuOpen]);
-
-  if (!isMenuOpen) return null;
 
   return (
-    <div className='mt-[68px] py-2 left-0 h-[calc(100vh-4rem)] w-full max-w-[200px] md:w-56 overflow-y-auto bg-white shadow-lg z-50 scrollbar-hide'>
-      <div className="px-2 mb-2">
-        <ul >
-          {/* Each link is flex row on md+ and flex-col (icon above text) on smaller */}
-          <Link to="/">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaHome size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Home</span>
-            </li>
-          </Link>
+    <>
+      {/* Overlay for any screen size */}
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-30 z-40"
+          onClick={() => dispatch(closeMenu())}
+        />
+      )}
 
-          <Link to="/shorts">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer  px-4">
-              <FaFire size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Shorts</span>
-            </li>
-          </Link>
+      {/* Sidebar Drawer */}
+      <div
+        className={`fixed top-0 left-0 h-full bg-white w-64 z-50 shadow-lg transition-transform duration-300 ease-in-out transform
+        ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+        {/* Top Bar inside Sidebar */}
+        <div className="flex items-center gap-4 px-3 py-3 mt-2 border-b border-gray-200">
+          <img  
+            onClick={() => dispatch(closeMenu())}
+            className='h-8 cursor-pointer'
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0evWy6vmua96UkF8RqHQv-SoBcuu3V9fwZw&s" alt="menu"/>
 
-          <Link to="/">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaVideo size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Video</span>
-            </li>
-          </Link>
+        
+           <Link  to="/"><img className='h-8 mx-2 '
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8nmSBXmGA-7Voowpk8oAcwLgXEpsIB_h3Jw&s" alt="Youtube-logo"/>
+           </Link>
+        </div>
 
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <MdLiveTv size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Live</span>
-            </li>
-          </Link>
-         
-        </ul>
+        {/* Sidebar Links */}
+        <div className="px-2 overflow-y-auto scrollbar-hide h-full pb-8">
+          <ul className="mt-4">
+            <MenuLink to="/" icon={<FaHome size={20} />} label="Home" />
+            <MenuLink to="/shorts" icon={<FaFire size={20} />} label="Shorts" />
+            <MenuLink to="/" icon={<FaVideo size={20} />} label="Video" />
+            <MenuLink to="/" icon={<MdLiveTv size={20} />} label="Live" />
+          </ul>
 
-       <h1 className="font-bold my-4 mx-4">Subscriptions</h1>
-        <ul>
-          {/* Each link is flex row on md+ and flex-col (icon above text) on smaller */}
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaFilm size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Movie</span>
-            </li>
-          </Link>
+          <SectionTitle title="Subscriptions" />
+          <ul>
+            <MenuLink to="/" icon={<FaFilm size={20} />} label="Movie" />
+            <MenuLink to="/" icon={<MdSportsEsports size={20} />} label="Sports" />
+            <MenuLink to="/" icon={<FaGamepad size={20} />} label="Gaming" />
+            <MenuLink to="/" icon={<FaThumbsUp size={20} />} label="Liked Video" />
+          </ul>
 
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <MdSportsEsports size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Sports</span>
-            </li>
-          </Link>
+          <SectionTitle title="Watch Later" />
+          <ul>
+            <MenuLink to="/" icon={<FaFilm size={20} />} label="Movie" />
+            <MenuLink to="/" icon={<MdSportsEsports size={20} />} label="Sports" />
+            <MenuLink to="/" icon={<FaGamepad size={20} />} label="Gaming" />
+            <MenuLink to="/" icon={<FaThumbsUp size={20} />} label="Liked Video" />
+          </ul>
 
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaGamepad size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Gaming</span>
-            </li>
-          </Link>
-
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaThumbsUp size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">liked video</span>
-            </li>
-          </Link>
-        </ul>
-
-
-     <h1 className="font-bold mx-4 my-4">Watch later</h1>
-       
-        <ul>
-          {/* Each link is flex row on md+ and flex-col (icon above text) on smaller */}
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaFilm size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Movie</span>
-            </li>
-          </Link>
-
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <MdSportsEsports size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Sports</span>
-            </li>
-          </Link>
-
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaGamepad size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Gaming</span>
-            </li>
-          </Link>
-
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaThumbsUp size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">liked video</span>
-            </li>
-          </Link>
-          <h1 className='font-bold my-4 mx-4 '>Explore</h1>
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaNewspaper size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">News</span>
-            </li>
-          </Link>
-          
-          <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <MdSchool size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">courses</span>
-            </li>
-          </Link>
-           <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaFire size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">Trending</span>
-            </li>
-          </Link>
-           <Link to="">
-            <li className="flex flex-col items-center md:flex-row md:items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
-              <FaPodcast size={24} className="mb-1 md:mb-0 md:mr-6" />
-              <span className="font-roboto font-normal leading-5 text-black">podcast</span>
-            </li>
-          </Link>
-        </ul>
+          <SectionTitle title="Explore" />
+          <ul>
+            <MenuLink to="/" icon={<FaNewspaper size={20} />} label="News" />
+            <MenuLink to="/" icon={<MdSchool size={20} />} label="Courses" />
+            <MenuLink to="/" icon={<FaFire size={20} />} label="Trending" />
+            <MenuLink to="/" icon={<FaPodcast size={20} />} label="Podcast" />
+          </ul>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default SideBar;
+const MenuLink = ({ to, icon, label }) => (
+  <Link to={to}>
+    <li className="flex items-center py-2 hover:bg-gray-200 rounded-md cursor-pointer px-4">
+      <span className="mr-4">{icon}</span>
+      <span className="text-sm font-roboto text-black">{label}</span>
+    </li>
+  </Link>
+);
 
+const SectionTitle = ({ title }) => (
+  <h1 className="font-semibold my-4 mx-4 text-gray-600">{title}</h1>
+);
+
+export default SideBar;

@@ -1,40 +1,37 @@
-import React, { useState } from 'react';
-import Comment from './Comment';
+ import Comment from "./Comment";
 
-const CommentList = ({ comments }) => {
-  const [localComments, setLocalComments] = useState(comments);
+const CommentList = ({ comments, setComments }) => {
+  const handleReact = (id, action) => {
+    setComments((prev) =>
+      prev.map((comment) => {
+        if (comment.id !== id) return comment;
+        const isLiked = action === "like" && !comment.liked;
+        const isDisLiked = action === "dislike" && !comment.disliked;
 
-  const addReply = (indexPath, replyText) => {
-    const newComments = JSON.parse(JSON.stringify(localComments)); // deep clone
-    let current = newComments;
-    for (let i = 0; i < indexPath.length - 1; i++) {
-      current = current[indexPath[i]].replies;
-    }
-    const parent = current[indexPath[indexPath.length - 1]];
-    parent.replies.push({
-      name: 'You',
-      text: replyText,
-      replies: [],
-    });
-    setLocalComments(newComments);
+        return {
+          ...comment,
+          liked: action === "like" ? !comment.liked : false,
+          disliked: action === "dislike" ? !comment.disliked : false,
+          likeCount:
+            action === "like"
+              ? comment.likeCount + (isLiked ? 1 : -1)
+              : comment.likeCount,
+         dislikeCount:
+            action === "dislike"
+              ? comment.dislikeCount + (isDisLiked ? 1 : -1)
+              : comment.dislikeCount,
+        };
+      })
+    );
   };
 
-  const renderComments = (comments, path = []) =>
-    comments.map((comment, index) => (
-      <div key={path.concat(index).join('-')}>
-        <Comment
-          data={comment}
-          onReply={(replyText) => addReply(path.concat(index), replyText)}
-        />
-        {comment.replies.length > 0 && (
-          <div className="pl-6 border-l border-gray-300 ml-4">
-            {renderComments(comment.replies, path.concat(index))}
-          </div>
-        )}
-      </div>
-    ));
-
-  return <>{renderComments(localComments)}</>;
+  return (
+    <div className="space-y-6">
+      {comments.map((comment) => (
+        <Comment key={comment.id} comment={comment} onReact={handleReact} />
+      ))}
+    </div>
+  );
 };
 
 export default CommentList;
