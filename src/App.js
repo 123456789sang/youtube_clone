@@ -10,8 +10,6 @@ import MainContainer from "./components/MainContainer"
 import Shorts from './components/Shorts';
 import SearchResultsPage from './components/SearchResultPage';
 import Layout from './components/Layout';
-import Demo from './components/Demo';
-import Demo1 from './components/Demo1';
 import VideoCategory from './components/VideoCategory';
 const appRouter =createBrowserRouter([{
     path:"/",

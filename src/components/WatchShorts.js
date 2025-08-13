@@ -51,7 +51,7 @@ const WatchShorts = () => {
               controls
               loop
               playsInline
-              className="   h-full w-auto  sm:w-96 object-cover  rounded-lg shadow-lg border-2 border-red-800"
+              className="   h-full w-auto  sm:w-96 object-cover  rounded-lg shadow-lg "
             />
         
         </div>
