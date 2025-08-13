@@ -32,11 +32,11 @@ const fetchVideoData = async (id) => {
       }),
     ]);
 
-   // console.log("💬 Comment Response:", commentsRes.data); // <-- Add this
+
 
     const video = videoRes.data.items?.[0];
     setDescription(video?.snippet?.description || "");
-    console.log(video?.snippet?.description)
+
     const formattedComments = commentsRes.data.items?.map((item) => {
       const top = item.snippet.topLevelComment.snippet;
       return {
@@ -56,7 +56,7 @@ const fetchVideoData = async (id) => {
 
     setComments(formattedComments);
   } catch (error) {
-    console.error("Error fetching video data", error);
+    alert("Error fetching video data", error);
   } finally {
     setLoading(false);
   }

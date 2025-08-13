@@ -2,7 +2,7 @@ import React from 'react'
 import {formatViews,formatDuration,formatTimeAgo} from "../utils/helper.js"
 
 const VideoCardDetails = ({info}) => {
-//console.log(info.contentDetails.duration)
+
     if (!info) return null;
 
     const { snippet, statistics, contentDetails } = info;
@@ -11,7 +11,7 @@ const VideoCardDetails = ({info}) => {
     const viewCount = statistics?.viewCount ? formatViews(statistics.viewCount) : "N/A";
     const timeAgo = formatTimeAgo(publishedAt);
     const videoDuration = formatDuration(duration);
- // console.log(videoDuration)
+ 
 
   return (
     <div className='flex flex-col md:flex-row gap-3 rounded-xl shadow-md  transition-all duration-300 hover:bg-gray-100

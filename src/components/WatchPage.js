@@ -24,7 +24,7 @@ const WatchPage = () => {
     try {
       const res = await fetch(`${YOUTUBE_VIDEO_DETAILS_API}&id=${videoId}`);
       const data = await res.json();
-    //   console.log(data)
+    //   (data)
       if (!data?.items?.length) {
         setError('Video not found.');
         return;
@@ -36,7 +36,7 @@ const WatchPage = () => {
       const channelId = video?.snippet?.channelId;
       const channelRes = await fetch(`${YOUTUBE_CHANNEL_API}&id=${channelId}`);
       const channelData = await channelRes.json();
-      //console.log(channelData)
+     
 
       if (!channelData?.items?.length) {
         setError('Channel data not found.');
@@ -45,8 +45,8 @@ const WatchPage = () => {
 
       setChannelDetails(channelData.items[0]);
     } catch (err) {
-      console.error(err);
-      setError('Something went wrong while fetching data.');
+      
+      alert('Something went wrong while fetching data.');
     }
   };
 

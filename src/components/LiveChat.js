@@ -28,7 +28,7 @@ const LiveChat = () => {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [chatMessages]);
-   console.log('Current messages:', chatMessages);
+  
 
   return (
     <div className="w-full flex flex-col rounded-lg border border-gray-200 overflow-hidden bg-white shadow-md">

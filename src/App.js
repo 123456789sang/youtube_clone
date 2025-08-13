@@ -12,6 +12,7 @@ import SearchResultsPage from './components/SearchResultPage';
 import Layout from './components/Layout';
 import Demo from './components/Demo';
 import Demo1 from './components/Demo1';
+import VideoCategory from './components/VideoCategory';
 const appRouter =createBrowserRouter([{
     path:"/",
     element:<Layout/>,
@@ -33,15 +34,11 @@ const appRouter =createBrowserRouter([{
             element: <SearchResultsPage /> 
         },
         
+
         {
-            path: 'demo',
-            element:(
-                <>
-                    <Demo/>
-                    <Demo1/>
-                </>
-            ),
-        },
+            path:'/category/:categoryId',
+            element:<VideoCategory/>
+        }
     ]
 
 }])

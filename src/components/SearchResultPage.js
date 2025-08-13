@@ -29,7 +29,7 @@ const SearchResultsPage = () => {
       const data = await res.json();
 
       if (!data.items || !Array.isArray(data.items)) {
-        console.error("API Error:", data.error?.message || "Unknown error");
+     
         setVideos([]);
         return;
       }
@@ -45,7 +45,7 @@ const SearchResultsPage = () => {
       if (videoIds.length > 0) {
         const videoRes = await fetch(`${YOUTUBE_VIDEO_DETAILS_API}&id=${videoIds}`);
         const videoData = await videoRes.json();
-
+        
         const viewsMap = {};
         const durationMap = {};
         videoData.items.forEach(video => {
@@ -68,12 +68,13 @@ const SearchResultsPage = () => {
         setChannelThumbnails(thumbnailsMap);
       }
     } catch (error) {
-      console.error("Error fetching search results:", error);
+     alert("something went :please try again some time");
+    
     }
   };
 
   return (
-    <div className="mt-5 sm:mt-8 px-4 sm:px-6 lg:px-12">
+    <div className="mt-5 sm:mt-8 px-4 sm:px-6 lg:pr-12">
       <h2 className="ml-16 text-xl sm:text-2xl font-semibold mb-6">
         Search Results for <span className="text-blue-600">"{query}"</span>
       </h2>

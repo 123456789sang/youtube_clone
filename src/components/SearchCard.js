@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { formatTimeAgo} from '../utils/helper.js';
 
 const SearchCard = ({ video, channelThumbnail,viewCount,duration }) => {
-    console.log("SearchCard duration:", duration);
+
 
   const { videoId } = video.id;
   const {
@@ -17,7 +17,7 @@ const SearchCard = ({ video, channelThumbnail,viewCount,duration }) => {
 
   return (
     <Link to={`/watch?v=${videoId}`} key={videoId}>
-       <div className="flex flex-col w-full max-w-full md:flex-row gap-4 rounded-xl shadow-md hover:bg-gray-50 transition-all mx-2 sm:mx-4 md:mx-6 lg:mx-12 xl:mx-24">
+       <div className="flex flex-col w-full max-w-full md:flex-row gap-4 rounded-xl shadow-md hover:bg-gray-50 transition-all mx-2 sm:mx-4  ">
             {/* Thumbnail */}
             <div className="w-full md:w-2/5 aspect-video relative flex-shrink-0 overflow-hidden">
                 <img
