@@ -1,4 +1,4 @@
-import lineClamp from '@tailwindcss/line-clamp';
+
 import scrollbarHide from 'tailwind-scrollbar-hide';
 
 const config = {
@@ -10,7 +10,7 @@ const config = {
       },
     },
   },
-  plugins: [lineClamp, scrollbarHide],
+  plugins: [ scrollbarHide],
 };
 
 export default config;
