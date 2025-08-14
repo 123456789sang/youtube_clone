@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  FaFire, FaHome, FaBars, FaFilm
+  FaFire, FaHome, FaBars, 
 } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { FaArrowAltCircleLeft, FaSearch } from 'react-icons/fa';
+import {  FaSearch } from 'react-icons/fa';
 import { toggleMenu } from '../utils/appSlice';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
