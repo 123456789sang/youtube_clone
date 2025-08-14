@@ -21,7 +21,7 @@ const Head = () => {
     const [showMobileSearch, setShowMobileSearch] = useState(false);
 
     const navigate = useNavigate();
-    
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(()=>{
        // make an api call after every key press 
        // but the diff bwt api call is <200ms

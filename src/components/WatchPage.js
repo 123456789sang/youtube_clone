@@ -14,7 +14,7 @@ const WatchPage = () => {
   const [error, setError] = useState(null);
 
   const videoId = searchParams.get('v');
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     dispatch(closeMenu());
     fetchVideoDetails();

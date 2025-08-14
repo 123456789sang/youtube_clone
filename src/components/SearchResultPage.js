@@ -18,7 +18,7 @@ const SearchResultsPage = () => {
   const [channelThumbnails, setChannelThumbnails] = useState({});
   const [videoViewCounts, setVideoViewCounts] = useState({});
   const [videoDurations, setVideoDurations] = useState({});
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getSearchResults();
   }, [query]);
